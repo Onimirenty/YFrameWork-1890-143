@@ -13,39 +13,64 @@ import traitment.ModelView;
  *
  * @author ITU
  */
+
+
+/*
+    les annotations doivent tjrs se terminer par .do
+ */
 public class Emp {
-    int id;
-    String nom;
+    int Id;
+    String Nom;
 
     public Emp(){}
      
     public Emp(int id, String nom) {
-        this.id = id;
-        this.nom = nom;
+        this.Id = id;
+        this.Nom = nom;
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public String getNom() {
-        return nom;
+        return Nom;
     }
     
     public void setNom(String nom) {
-        this.nom = nom;
+        this.Nom = nom;
     }
     
-    @Myannotation(value="empall")
+    @Myannotation(value="empall.do")
     public ModelView getallemployer(){
-        HashMap<String,Object> map=new HashMap<String,Object>();
-        map.put("empall",34);
+        HashMap<String,Object> 
+        map=new HashMap<String,Object>();
         ModelView view=new ModelView("AffichageEmp.jsp",map);
+        view.addItem("attribut",34);
         return view;
     }
     
+    @Myannotation(value="add_Emp.do")
+    public ModelView save(){
+        HashMap<String,Object> map=new HashMap<String,Object>();
+        ModelView view=new ModelView("AffichageEmp.jsp",map);
+        view.addItem("attribut",this.getNom());
+        return view;
+    }
+
+    @Myannotation(value="ajoute_numero.do")
+    public ModelView ajouteNumero(int numero,String nom){
+        HashMap<String,Object> map=new HashMap<String,Object>();
+        ModelView view=new ModelView("AffichageEmp.jsp",map);
+        String soratra="";
+        for(int i=0;i<numero;i++){
+            soratra=soratra+nom;
+        }
+        view.addItem("attribut",soratra);
+        return view;
+    }
 }
