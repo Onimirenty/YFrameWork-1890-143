@@ -6,21 +6,17 @@
 package personne;
 
 import annotation.Myannotation;
+import annotation.Singleton;
 import java.util.HashMap;
 import traitment.ModelView;
-
-/**
- *
- * @author ITU
- */
+import traitment.FileUpload;
 
 
-/*
-    les annotations doivent tjrs se terminer par .do
- */
+@Singleton
 public class Emp {
     int Id;
     String Nom;
+    FileUpload File;
 
     public Emp(){}
      
@@ -40,9 +36,17 @@ public class Emp {
     public String getNom() {
         return Nom;
     }
+
+    public FileUpload getFile(){
+        return this.File;
+    }
     
     public void setNom(String nom) {
         this.Nom = nom;
+    }
+
+    public void setFile(FileUpload file){
+        this.File=file;
     }
     
     @Myannotation(value="empall.do")
@@ -50,15 +54,17 @@ public class Emp {
         HashMap<String,Object> 
         map=new HashMap<String,Object>();
         ModelView view=new ModelView("AffichageEmp.jsp",map);
-        view.addItem("attribut",34);
+        view.addItem("attribut",666);
         return view;
     }
-    
+
+    //regle: la classe emp doit comporter Un attribut FileUpload
     @Myannotation(value="add_Emp.do")
     public ModelView save(){
         HashMap<String,Object> map=new HashMap<String,Object>();
         ModelView view=new ModelView("AffichageEmp.jsp",map);
-        view.addItem("attribut",this.getNom());
+        this.getFile().upload("D:/sprint");
+        view.addItem("attribut",this.getFile().getName());
         return view;
     }
 
