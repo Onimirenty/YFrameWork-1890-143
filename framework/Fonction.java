@@ -94,12 +94,12 @@ public class Fonction {
        return mapping;
    }
    
+
    public Class getClass(String annotation,HashMap<String,Mapping> hashmap) throws ClassNotFoundException, Exception{
        Mapping mapping=getMapping(annotation,hashmap);
        Class classe=Class.forName(mapping.getClassname());
        return classe;
    }
-   
    public Field[] listeAttribut(String annotation,HashMap<String,Mapping> hashmap) throws Exception{
        Class classe=getClass(annotation,hashmap);
        Field[] listeAttribut=classe.getDeclaredFields();
@@ -109,9 +109,21 @@ public class Fonction {
     public ModelView invocationMethode(String annotation,HashMap<String,Mapping> hashmap,Object instance) throws Exception{
        Mapping mapping=getMapping(annotation,hashmap);
        Class classe=Class.forName(mapping.getClassname());
+
+    public ModelView invocationMethode(String annotation,HashMap<String,Mapping> hashmap) throws Exception{
+       Mapping mapping=getMapping(annotation,hashmap);
+       Class classe=Class.forName(mapping.getClassname());
+       Object instance=classe.newInstance();
        Method methode=instance.getClass().getMethod(mapping.getMethod());
        ModelView resultat=(ModelView)methode.invoke(instance);
       return resultat;
    }
     
+
+    public static void main(String[] args)throws Exception{
+        Fonction fonction=new Fonction();
+        HashMap<String,Mapping> map=fonction.listeHashMapAllClass("C:\\Users\\ITU\\Documents\\NetBeansProjects\\sprint5\\build\\web\\");
+        ModelView val=fonction.invocationMethode("empall",map);
+        System.out.println(val.getView());
+    }
 }
